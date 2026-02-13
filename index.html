@@ -1,165 +1,204 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Russi Store Ultimate</title>
+<title>Russi Store</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Orbitron',sans-serif;}
 body{
     min-height:100vh;
-    background: linear-gradient(135deg,#111, #300, #600);
-    color:white;
+    background:linear-gradient(135deg,#000,#200,#500);
     display:flex;
     justify-content:center;
     align-items:center;
     transition:0.5s;
-    overflow:hidden;
+    color:white;
 }
-body.day{ background: linear-gradient(135deg,#f0f0f0, #aaa, #ddd); color:#111; }
+body.day{
+    background:linear-gradient(135deg,#f5f5f5,#ccc,#eee);
+    color:#111;
+}
 .container{
-    width:95%; max-width:500px;
-    background: rgba(0,0,0,0.5);
-    backdrop-filter: blur(25px);
-    border-radius:25px;
+    width:95%;
+    max-width:500px;
     padding:25px;
-    box-shadow:0 0 50px #ff0000, 0 0 100px #ff5555;
+    border-radius:20px;
+    background:rgba(0,0,0,0.6);
+    backdrop-filter:blur(20px);
+    box-shadow:0 0 40px red,0 0 80px #ff4444;
     transition:0.4s;
 }
-.container:hover{ transform:translateY(-5px); box-shadow:0 0 90px #ff0000,0 0 150px #ff5555;}
-h1{text-align:center; color:#ff0000; letter-spacing:2px; margin-bottom:20px; text-shadow:0 0 10px #ff0000,0 0 20px #ff5555;}
-input, textarea, select{
-    width:100%; padding:12px; margin:8px 0; border-radius:8px;
-    border:none; outline:none; background:#222; color:white;
-    box-shadow:0 0 10px #ff0000;
-    transition:0.3s;
+.container:hover{
+    transform:translateY(-5px);
+    box-shadow:0 0 70px red,0 0 120px #ff4444;
 }
-body.day input, body.day textarea, body.day select{ background:#ddd; color:#111; box-shadow:0 0 10px #aaa; }
-input:focus, textarea:focus{ box-shadow:0 0 15px #ff0000; }
+h1{
+    text-align:center;
+    margin-bottom:20px;
+    color:#ff0000;
+    text-shadow:0 0 10px red,0 0 20px #ff4444;
+}
+input,textarea{
+    width:100%;
+    padding:12px;
+    margin:8px 0;
+    border:none;
+    border-radius:8px;
+    outline:none;
+    background:#111;
+    color:white;
+    box-shadow:0 0 10px red;
+}
+body.day input, body.day textarea{
+    background:#ddd;
+    color:#111;
+    box-shadow:0 0 10px #aaa;
+}
 button{
-    width:100%; padding:12px; border:none; border-radius:8px; background:#ff0000;
-    color:white; font-weight:bold; cursor:pointer; transition:0.3s, transform 0.2s;
-    box-shadow:0 0 10px #ff0000,0 0 20px #ff5555;
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    background:red;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+    box-shadow:0 0 10px red,0 0 20px #ff4444;
 }
-button:hover{ background:#cc0000; transform:scale(1.05); box-shadow:0 0 20px #ff0000,0 0 40px #ff5555;}
-.success{ color:#0f0; font-weight:bold; margin-top:10px; display:none; animation:fadeIn 0.5s;}
-.error{ color:#ff3333; font-weight:bold; margin-top:10px; display:none; animation:fadeIn 0.5s;}
-.langToggle{ cursor:pointer; text-align:center; margin-bottom:10px; color:#ff0000; }
-.langToggle:hover{ color:#cc0000; }
-.footer{text-align:center; margin-top:15px; font-size:14px; opacity:0.7;}
-@keyframes fadeIn{from{opacity:0;} to{opacity:1;}}
+button:hover{
+    transform:scale(1.05);
+    box-shadow:0 0 20px red,0 0 40px #ff4444;
+}
+.success{color:#00ff00;margin-top:10px;display:none;}
+.error{color:#ff3333;margin-top:10px;display:none;}
+.footer{text-align:center;margin-top:15px;font-size:14px;opacity:0.7;}
+.lang-btn{margin-bottom:10px;cursor:pointer;color:red;text-align:center;}
 </style>
 </head>
 <body>
+
 <div class="container">
 <h1 id="title">🛒 متجر روسي</h1>
-<div class="langToggle" onclick="toggleLanguage()">🌐 تغيير اللغة</div>
-<select id="languageSelect">
-  <option value="ar">العربية</option>
-  <option value="en">English</option>
-  <option value="ru">Русский</option>
-</select>
-<input id="product" placeholder="اكتب المنتج/الخدمة هنا" />
-<input id="contact" placeholder="Telegram أو Email" />
-<p id="note" style="font-size:12px; opacity:0.8;">يتم دفع قبل استلام، سيتم إرسال ثمن طلبك عند قراءته وأنت أعطيت موافقة على ذلك</p>
+
+<div class="lang-btn" onclick="toggleLang()">🌐 تغيير اللغة</div>
+
+<input id="product" placeholder="اكتب المنتج هنا">
+<input id="telegram" placeholder="Telegram Username">
+<input id="email" placeholder="Email">
+
+<p id="note" style="font-size:12px;opacity:0.8;">
+يتم دفع قبل استلام سيف يتم ارسال ثمن طلبك عند قرائته وانت اعطي موافقة علا دالك
+</p>
+
 <p class="error" id="errorMsg"></p>
-<button onclick="sendRequest()">أرسل الطلب</button>
-<p class="success" id="successMsg">✓ تم إرسال الطلب!</p>
+<p class="success" id="successMsg">✓ تم إرسال الطلب</p>
+
+<button onclick="sendRequest()">إرسال الطلب</button>
+
 <div class="footer">
-<a href="https://instagram.com/thecryzruss" target="_blank">Instagram</a> |
-<a href="https://t.me/wxl_e" target="_blank">Telegram</a> |
-<a href="https://t.me/WXL_STORE" target="_blank">Channel</a>
+Instagram | Telegram | Channel
 </div>
-<button onclick="toggleMode()" style="margin-top:10px;">☀️ / 🌙 وضع نهار/ليل</button>
+
+<button onclick="toggleMode()" style="margin-top:10px;">☀️ / 🌙</button>
+
 </div>
 
 <script>
-const messages = {
-  ar: {
-    title:"🛒 متجر روسي",
-    product:"اكتب المنتج/الخدمة هنا",
-    contact:"Telegram و Email",
-    note:"يتم دفع قبل استلام، سيتم إرسال ثمن طلبك عند قراءته وأنت أعطيت موافقة على ذلك",
-    success:"✓ تم إرسال الطلب!",
-    errorAll:"❌ المرجو تعبئة جميع الحقول (Telegram + Email)"
-  },
-  en: {
-    title:"🛒 Russi Store",
-    product:"Write product/service here",
-    contact:"Telegram & Email",
-    note:"Payment before delivery. The price will be sent once read and you approved it",
-    success:"✓ Request sent!",
-    errorAll:"❌ Please fill all fields (Telegram + Email)"
-  },
-  ru: {
-    title:"🛒 Русский Магазин",
-    product:"Введите продукт/услугу здесь",
-    contact:"Telegram и Email",
-    note:"Оплата до получения. Цена будет отправлена после прочтения и вашего согласия",
-    success:"✓ Заказ отправлен!",
-    errorAll:"❌ Пожалуйста, заполните все поля (Telegram + Email)"
-  }
+const TOKEN = "8582847416:AAFbHj5ot1hSl_LnAjXFyt2_fv6JU-b1m4k";
+const CHAT_ID = "8384261139";
+
+const texts = {
+ar:{
+title:"🛒 متجر روسي",
+product:"اكتب المنتج هنا",
+telegram:"Telegram Username",
+email:"Email",
+note:"يتم دفع قبل استلام سيف يتم ارسال ثمن طلبك عند قرائته وانت اعطي موافقة علا دالك",
+error:"❌ لازم تعمر كل الخانات (Telegram + Email)",
+success:"✓ تم إرسال الطلب"
+},
+en:{
+title:"🛒 Russi Store",
+product:"Write product here",
+telegram:"Telegram Username",
+email:"Email",
+note:"Payment before delivery. Price will be sent once read and approved.",
+error:"❌ Fill all fields (Telegram + Email)",
+success:"✓ Request sent"
+},
+ru:{
+title:"🛒 Русский Магазин",
+product:"Введите продукт",
+telegram:"Telegram Username",
+email:"Email",
+note:"Оплата перед получением. Цена будет отправлена после подтверждения.",
+error:"❌ Заполните все поля (Telegram + Email)",
+success:"✓ Заказ отправлен"
+}
 };
 
-let currentLang = "ar";
+let lang="ar";
 
-function toggleLanguage(){
-  if(currentLang==="ar") currentLang="en";
-  else if(currentLang==="en") currentLang="ru";
-  else currentLang="ar";
-  applyLanguage();
+function toggleLang(){
+lang = lang==="ar" ? "en" : lang==="en" ? "ru" : "ar";
+applyLang();
 }
 
-function applyLanguage(){
-  const m = messages[currentLang];
-  document.getElementById("title").innerText = m.title;
-  document.getElementById("product").placeholder = m.product;
-  document.getElementById("contact").placeholder = m.contact;
-  document.getElementById("note").innerText = m.note;
-  document.getElementById("successMsg").innerText = m.success;
-  document.getElementById("errorMsg").innerText = "";
-  document.getElementById("languageSelect").value = currentLang;
+function applyLang(){
+document.getElementById("title").innerText=texts[lang].title;
+document.getElementById("product").placeholder=texts[lang].product;
+document.getElementById("telegram").placeholder=texts[lang].telegram;
+document.getElementById("email").placeholder=texts[lang].email;
+document.getElementById("note").innerText=texts[lang].note;
+document.getElementById("successMsg").innerText=texts[lang].success;
 }
 
 function toggleMode(){
-  document.body.classList.toggle("day");
+document.body.classList.toggle("day");
 }
 
 function sendRequest(){
-  const product = document.getElementById('product').value.trim();
-  const contact = document.getElementById('contact').value.trim();
-  const successMsg = document.getElementById('successMsg');
-  const errorMsg = document.getElementById('errorMsg');
+let product=document.getElementById("product").value.trim();
+let telegram=document.getElementById("telegram").value.trim();
+let email=document.getElementById("email").value.trim();
 
-  // Validation صارم: لازم Telegram + Email
-  if(!product || !contact){
-    successMsg.style.display = "none";
-    errorMsg.innerText = messages[currentLang].errorAll;
-    errorMsg.style.display = "block";
-    return;
-  }
+let error=document.getElementById("errorMsg");
+let success=document.getElementById("successMsg");
 
-  const TOKEN = "8582847416:AAHyWcPhDyC49j8cqvNPO1VrT1jsZ4c9-bo";
-  const CHAT_ID = "8582847416";
-  const message = `📦 طلب جديد!\nمنتوج: ${product}\nتواصل: ${contact}`;
-
-  fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}`)
-  .then(res => res.json())
-  .then(data => {
-    if(data.ok){
-      errorMsg.style.display = "none";
-      successMsg.style.display = "block";
-      setTimeout(()=>{ successMsg.style.display = "none"; }, 4000);
-      document.getElementById('product').value = "";
-      document.getElementById('contact').value = "";
-    } else {
-      alert("❌ حدث خطأ، حاول مرة أخرى");
-    }
-  }).catch(err => { alert("❌ خطأ في الاتصال بالإنترنت"); });
+if(!product || !telegram || !email){
+error.innerText=texts[lang].error;
+error.style.display="block";
+success.style.display="none";
+return;
 }
 
-applyLanguage();
+let message=`📦 طلب جديد\n\n🛒 المنتج: ${product}\n👤 Telegram: ${telegram}\n📧 Email: ${email}`;
+
+fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}`)
+.then(res=>res.json())
+.then(data=>{
+if(data.ok){
+error.style.display="none";
+success.style.display="block";
+document.getElementById("product").value="";
+document.getElementById("telegram").value="";
+document.getElementById("email").value="";
+}else{
+error.innerText="❌ Telegram Error";
+error.style.display="block";
+}
+})
+.catch(()=>{
+error.innerText="❌ Network Error";
+error.style.display="block";
+});
+}
+
+applyLang();
 </script>
+
 </body>
 </html>
