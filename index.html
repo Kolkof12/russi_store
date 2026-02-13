@@ -79,26 +79,26 @@ const messages = {
   ar: {
     title:"🛒 متجر روسي",
     product:"اكتب المنتج/الخدمة هنا",
-    contact:"Telegram أو Email",
+    contact:"Telegram و Email",
     note:"يتم دفع قبل استلام، سيتم إرسال ثمن طلبك عند قراءته وأنت أعطيت موافقة على ذلك",
     success:"✓ تم إرسال الطلب!",
-    error:"❌ المرجو تعبئة جميع الحقول"
+    errorAll:"❌ المرجو تعبئة جميع الحقول (Telegram + Email)"
   },
   en: {
     title:"🛒 Russi Store",
     product:"Write product/service here",
-    contact:"Telegram or Email",
+    contact:"Telegram & Email",
     note:"Payment before delivery. The price will be sent once read and you approved it",
     success:"✓ Request sent!",
-    error:"❌ Please fill all fields"
+    errorAll:"❌ Please fill all fields (Telegram + Email)"
   },
   ru: {
     title:"🛒 Русский Магазин",
     product:"Введите продукт/услугу здесь",
-    contact:"Telegram или Email",
+    contact:"Telegram и Email",
     note:"Оплата до получения. Цена будет отправлена после прочтения и вашего согласия",
     success:"✓ Заказ отправлен!",
-    error:"❌ Пожалуйста, заполните все поля"
+    errorAll:"❌ Пожалуйста, заполните все поля (Telegram + Email)"
   }
 };
 
@@ -127,14 +127,15 @@ function toggleMode(){
 }
 
 function sendRequest(){
-  const product = document.getElementById('product').value;
-  const contact = document.getElementById('contact').value;
+  const product = document.getElementById('product').value.trim();
+  const contact = document.getElementById('contact').value.trim();
   const successMsg = document.getElementById('successMsg');
   const errorMsg = document.getElementById('errorMsg');
 
+  // Validation صارم: لازم Telegram + Email
   if(!product || !contact){
     successMsg.style.display = "none";
-    errorMsg.innerText = messages[currentLang].error;
+    errorMsg.innerText = messages[currentLang].errorAll;
     errorMsg.style.display = "block";
     return;
   }
