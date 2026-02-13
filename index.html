@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Russi Store Ultimate</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Orbitron',sans-serif;}
+body{
+    min-height:100vh;
+    background:#111;
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    transition:0.5s;
+}
+body.day{ background:#f0f0f0; color:#111; }
+.container{
+    width:95%; max-width:500px;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(20px);
+    border-radius:25px;
+    padding:25px;
+    box-shadow:0 0 50px #ff0000;
+    transition:0.4s;
+}
+.container:hover{ transform:translateY(-5px); box-shadow:0 0 90px #ff0000;}
+h1{text-align:center; color:#ff0000; letter-spacing:2px; margin-bottom:20px;}
+input, textarea, select{
+    width:100%; padding:12px; margin:8px 0; border-radius:8px;
+    border:none; outline:none; background:#222; color:white;
+}
+body.day input, body.day textarea, body.day select{ background:#ddd; color:#111; }
+button{
+    width:100%; padding:12px; border:none; border-radius:8px; background:#ff0000;
+    color:white; font-weight:bold; cursor:pointer; transition:0.3s;
+}
+button:hover{ background:#cc0000; transform:scale(1.03); }
+.success{ color:#0f0; font-weight:bold; margin-top:10px; display:none; }
+.langToggle{ cursor:pointer; text-align:center; margin-bottom:10px; color:#ff0000; }
+.langToggle:hover{ color:#cc0000; }
+.footer{text-align:center; margin-top:15px; font-size:14px; opacity:0.7;}
+</style>
+</head>
+<body>
+<div class="container">
+<h1 id="title">🛒 متجر روسي</h1>
+<div class="langToggle" onclick="toggleLanguage()">🌐 تغيير اللغة</div>
+<select id="languageSelect">
+  <option value="ar">العربية</option>
+  <option value="en">English</option>
+  <option value="ru">Русский</option>
+</select>
+<input id="product" placeholder="اكتب المنتج/الخدمة هنا" />
+<input id="contact" placeholder="Telegram أو Email" />
+<p id="note" style="font-size:12px; opacity:0.8;">يتم دفع قبل استلام، سيتم إرسال ثمن طلبك عند قراءته وأنت أعطيت موافقة على ذلك</p>
+<button onclick="sendRequest()">أرسل الطلب</button>
+<p class="success" id="successMsg">✓ تم إرسال الطلب!</p>
+<div class="footer">
+<a href="https://instagram.com/thecryzruss" target="_blank">Instagram</a> |
+<a href="https://t.me/wxl_e" target="_blank">Telegram</a> |
+<a href="https://t.me/WXL_STORE" target="_blank">Channel</a>
+</div>
+<button onclick="toggleMode()" style="margin-top:10px;">☀️ / 🌙 وضع نهار/ليل</button>
+</div>
+
+<script>
+const messages = {
+  ar: {
+    title:"🛒 متجر روسي",
+    product:"اكتب المنتج/الخدمة هنا",
+    contact:"Telegram أو Email",
+    note:"يتم دفع قبل استلام، سيتم إرسال ثمن طلبك عند قراءته وأنت أعطيت موافقة على ذلك",
+    success:"✓ تم إرسال الطلب!"
+  },
+  en: {
+    title:"🛒 Russi Store",
+    product:"Write product/service here",
+    contact:"Telegram or Email",
+    note:"Payment before delivery. The price will be sent once read and you approved it",
+    success:"✓ Request sent!"
+  },
+  ru: {
+    title:"🛒 Русский Магазин",
+    product:"Введите продукт/услугу здесь",
+    contact:"Telegram или Email",
+    note:"Оплата до получения. Цена будет отправлена после прочтения и вашего согласия",
+    success:"✓ Заказ отправлен!"
+  }
+};
+
+let currentLang = "ar";
+
+function toggleLanguage(){
+  if(currentLang==="ar") currentLang="en";
+  else if(currentLang==="en") currentLang="ru";
+  else currentLang="ar";
+  applyLanguage();
+}
+
+function applyLanguage(){
+  const m = messages[currentLang];
+  document.getElementById("title").innerText = m.title;
+  document.getElementById("product").placeholder = m.product;
+  document.getElementById("contact").placeholder = m.contact;
+  document.getElementById("note").innerText = m.note;
+  document.getElementById("successMsg").innerText = m.success;
+  document.getElementById("languageSelect").value = currentLang;
+}
+
+function toggleMode(){
+  document.body.classList.toggle("day");
+}
+
+function sendRequest(){
+  const product = document.getElementById('product').value;
+  const contact = document.getElementById('contact').value;
+  const successMsg = document.getElementById('successMsg');
+
+  if(!product || !contact){ alert("Fill all fields"); return; }
+
+  const TOKEN = "8582847416:AAHyWcPhDyC49j8cqvNPO1VrT1jsZ4c9-bo";
+  const CHAT_ID = "8582847416";
+  const message = `📦 طلب جديد!\nمنتوج: ${product}\nتواصل: ${contact}`;
+
+  fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}`)
+  .then(res => res.json())
+  .then(data => {
+    if(data.ok){
+      successMsg.style.display = "block";
+      setTimeout(()=>{ successMsg.style.display = "none"; }, 4000);
+      document.getElementById('product').value = "";
+      document.getElementById('contact').value = "";
+    } else {
+      alert("❌ حدث خطأ، حاول مرة أخرى");
+    }
+  }).catch(err => { alert("❌ خطأ في الاتصال بالإنترنت"); });
+}
+
+applyLanguage();
+</script>
+</body>
+</html>
